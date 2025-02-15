@@ -1,4 +1,5 @@
 from django.utils import timezone
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
@@ -11,6 +12,7 @@ class SquareRequestSerializer(serializers.Serializer):
     n = serializers.IntegerField(min_value=1, max_value=100)
 
 
+@swagger_auto_schema(query_serializer=SquareRequestSerializer, method="GET")
 @api_view(["GET"])
 def square_view(request: Request) -> Response:
     serializer = SquareRequestSerializer(data=request.query_params)
@@ -36,6 +38,7 @@ class TripletRequestSerializer(serializers.Serializer):
     c = serializers.IntegerField(max_value=1000)
 
 
+@swagger_auto_schema(query_serializer=TripletRequestSerializer, method="GET")
 @api_view(["GET"])
 def triplet_view(request: Request) -> Response:
     serializer = TripletRequestSerializer(data=request.query_params)
